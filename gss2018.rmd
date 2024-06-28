@@ -1,7 +1,7 @@
 ---
 title: "General Social Survey"
-author: "Your Name"
-date: "Year 2020"
+author: "Luis Resendez"
+date: "Summer 2024"
 output: 
   html_document:
     number_sections: true
@@ -26,8 +26,16 @@ source("GrabData.R")
 The data in the dataframe GSSdata is from the 2018 General Social Survey. The first blocks of R-code has selected down a subset of the data to just 16 variables. It has further removed unwanted factor levels in much of the data. Examine the code in the GrabData.R file to see what it is doing. Some of the variables are categorical and others are numerical. Be sure to do a variable analysis before tackling each question.  
 First question - Is opinion on the death penalty (CAPPUN) independent of gun ownership (OWNGUN)?
 
+$H_0$ Cappun is independent of own gun, they are not related.  
+$H_a$ They are dependent
+
 
 ## Methods
+
+CAPPUN IS A categorical variable,  
+owngun is a categorical variable, 
+si I use the cat~cat data helper file  
+we want cappun~OWNGUN  
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
 
@@ -39,7 +47,11 @@ First question - Is opinion on the death penalty (CAPPUN) independent of gun own
 
 #### Graphical Descriptive Results
 
+
+
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+
 
 #### Numerical Descriptive Results
 
