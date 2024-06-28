@@ -47,27 +47,72 @@ we want cappun~OWNGUN
 
 #### Graphical Descriptive Results
 
+```{r}
+barchartGC(~OWNGUN +CAPPUN,data=GSSdata)
 
+```
+The graph shows that people who own a gun are more likely to favor capital punishment
 
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 
 
-#### Numerical Descriptive Results
+#### Numerical Descriptive Results  
+
+```{r}
+table1 <- xtabs(~OWNGUN + CAPPUN, data=GSSdata)
+colPerc(table1)
+```
+
+
+
+```{r}
+table1 <- xtabs(~OWNGUN + CAPPUN, data=GSSdata)
+colPerc(table1)
+```
+This shows that people who own a gun are 75% in favor then the 57% who oppose.
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 ### Inferential Results
 
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
+```{r}
+
+chisqtestGC(table1)
+
+```
+```{r}
+fisher.test(table1)
+```
+The P value for chi-squared test was p=0.02022. This means we reject the null hypothesis, and conclude that the opinion on capitol punishment (CAPPUN) is not independent of gun ownership(OWNGUN) because it is less then .05.
+
+The p-value for the fisher exact test was p=0.01651 and we reject the null hypothesis as with the chi-square test. The odds ratio was 2.3 times more likley to favor CAPPUN punishment then those who dont own.
+
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
 #  Question 2
+
+Is there a difference in years of education (EDUC) between those who did or did not vote in 2012 (VOTE12)?
+
+$H_0$ There is no difference in years of education between those who did or did not vote in 2012 (VOTE12)?  
+
+$H_a$ There is a difference
+
 
 <!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?!-->
 
 Is there a difference in years of education (EDUC) between the those who did or did not vote in 2012 (VOTE12)?
 
 ## Methods
+
+EDUC is a numerical variable  
+Vote12 is categorical variable
+I use the file Numerical~Cat data file
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
 
@@ -79,14 +124,32 @@ Is there a difference in years of education (EDUC) between the those who did or 
 
 #### Graphical Descriptive Results
 
+```{r}
+plot(EDUC~VOTE12,data=GSSdata)
+```
+This shows that more people who voted in 2012 tend to have more education  
+
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 #### Numerical Descriptive Results
+
+```{r}
+favstats(EDUC~VOTE12,data=GSSdata)
+
+```
+
+This shows that people who voted12 has an average of 16 years of education and people who did not vote had 13 years of education.
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 ### Inferential Results
 
+```{r}
+t.test(momheight~Sex,data=ucdavis1)
+```
+The p-value is 0.0000001 so this means we reject the null hypothesis because the p-value is smaller then 0.05.
+
+I conclude that there is a diferrence in years of education between those who did or did not vote in 2012.
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
 #  Question 3
@@ -95,8 +158,15 @@ Is there a difference in years of education (EDUC) between the those who did or 
 
 Determine if a persons performance on the wordsum test (WORDSUM) is independent of their level of schooling (DEGREE).
 
+$H_0$ The score of a person wordsum test is independent of their level of schooling 
+
+$H_a$ They are dependent
+
 ## Methods
 
+WORDSUM is a numerical variable. 
+DEGREE is a categorical variable.
+So I use the num~cat data file
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
 
 ##Results
@@ -107,18 +177,58 @@ Determine if a persons performance on the wordsum test (WORDSUM) is independent 
 
 #### Graphical Descriptive Results
 
+```{r}
+plot(WORDSUM~DEGREE,data=GSSdata)
+```
+This shows that there is a difference between the performance of a persons test and their levels of schooling.
+
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 #### Numerical Descriptive Results
 
+```{r}
+favstats(WORDSUM~DEGREE,data=GSSdata)
+
+```
+This shows that there is a difference between LT high school and the graduates because LT high school is at a 7 and graduates at a 10
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 ### Inferential Results
+
+```{r}
+anova=aov(WORDSUM~DEGREE,data=GSSdata)
+summary(anova)
+```
+This shows that we reject the null because the p-value is 0.0000002 which is smaller then .05
+
+
+```{r}
+#we specify the margins starting at the bottom and proceeding clockwise - thus 8.7 is the left side margin to hold the names of the factors
+par(mar = c(7, 8.7, 2, 2))
+plot(TukeyHSD(anova),las=2)
+```
+There is no difference between high school and less than high school. There is a difference with jr   college and high school. There is a difference with a bachelors and high school.    
+There is a difference between graduate and high school  
+There is no difference between high school and graduate  
+No difference between jr college and graduate  
+No difference between bachelors and graduate  
 
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
 
 # Discussion and Conclusion
+
+4.0.0.1 Question 1: is gun ownership independent of the opinion on capitol punishment.
+
+The summery results and the inferential results show that they are not independent.
+
+4.0.0.2 Question 2: Is there a difference in years of education (EDUC) between the those who did or did not vote in 2012 (VOTE12)?
+
+In conclusion this in graphical results shows that more people who voted in 2012 tend to have more education
+
+4.0.0.3 Question 3: Determine if a persons performance on the (WORDSUM) is independent of their level of schooling (DEGREE)?
+
+We determined in inferential results that there is a difference between the performance on the test and their level of schooling.
 
 <!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
 
